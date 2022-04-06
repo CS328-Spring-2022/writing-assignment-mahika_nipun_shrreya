@@ -1,6 +1,6 @@
 ### My gitignores ###
 _html/*.html
-
+_notebooks/data/papers.csv
 
 
 # Templates taken from: https://github.com/github/gitignore
