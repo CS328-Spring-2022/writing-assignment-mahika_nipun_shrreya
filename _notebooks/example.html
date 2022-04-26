@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Max Welling", "label": "Max Welling", "shape": "dot", "size": 10}, {"id": "Yee Whye Teh", "label": "Yee Whye Teh", "shape": "dot", "size": 10}, {"id": "Richard Zemel", "label": "Richard Zemel", "shape": "dot", "size": 10}, {"id": "Jun Zhu", "label": "Jun Zhu", "shape": "dot", "size": 10}, {"id": "Zoubin Ghahramani", "label": "Zoubin Ghahramani", "shape": "dot", "size": 10}, {"id": "Nicolas Heess", "label": "Nicolas Heess", "shape": "dot", "size": 10}, {"id": "Tong Zhang", "label": "Tong Zhang", "shape": "dot", "size": 10}, {"id": "Oriol Vinyals", "label": "Oriol Vinyals", "shape": "dot", "size": 10}, {"id": "Arthur Gretton", "label": "Arthur Gretton", "shape": "dot", "size": 10}, {"id": "Bernhard Sch\u00f6lkopf", "label": "Bernhard Sch\u00f6lkopf", "shape": "dot", "size": 10}, {"id": "Le Song", "label": "Le Song", "shape": "dot", "size": 10}, {"id": "Dale Schuurmans", "label": "Dale Schuurmans", "shape": "dot", "size": 10}, {"id": "Sergey Levine", "label": "Sergey Levine", "shape": "dot", "size": 10}, {"id": "Andreas Krause", "label": "Andreas Krause", "shape": "dot", "size": 10}, {"id": "Han Liu", "label": "Han Liu", "shape": "dot", "size": 10}, {"id": "Pradeep Ravikumar", "label": "Pradeep Ravikumar", "shape": "dot", "size": 10}, {"id": "Zhaoran Wang", "label": "Zhaoran Wang", "shape": "dot", "size": 10}, {"id": "Quanquan Gu", "label": "Quanquan Gu", "shape": "dot", "size": 10}, {"id": "Inderjit Dhillon", "label": "Inderjit Dhillon", "shape": "dot", "size": 10}, {"id": "Cho-Jui Hsieh", "label": "Cho-Jui Hsieh", "shape": "dot", "size": 10}, {"id": "Eric Xing", "label": "Eric Xing", "shape": "dot", "size": 10}, {"id": "Michael Jordan", "label": "Michael Jordan", "shape": "dot", "size": 10}, {"id": "Shie Mannor", "label": "Shie Mannor", "shape": "dot", "size": 10}, {"id": "Csaba Szepesvari", "label": "Csaba Szepesvari", "shape": "dot", "size": 10}, {"id": "Remi Munos", "label": "Remi Munos", "shape": "dot", "size": 10}, {"id": "Pushmeet Kohli", "label": "Pushmeet Kohli", "shape": "dot", "size": 10}, {"id": "Percy Liang", "label": "Percy Liang", "shape": "dot", "size": 10}, {"id": "Francis Bach", "label": "Francis Bach", "shape": "dot", "size": 10}, {"id": "Stefanie Jegelka", "label": "Stefanie Jegelka", "shape": "dot", "size": 10}, {"id": "Prateek Jain", "label": "Prateek Jain", "shape": "dot", "size": 10}, {"id": "David Blei", "label": "David Blei", "shape": "dot", "size": 10}, {"id": "Russ Salakhutdinov", "label": "Russ Salakhutdinov", "shape": "dot", "size": 10}, {"id": "Lawrence Carin", "label": "Lawrence Carin", "shape": "dot", "size": 10}, {"id": "Stefano Ermon", "label": "Stefano Ermon", "shape": "dot", "size": 10}, {"id": "Yoshua Bengio", "label": "Yoshua Bengio", "shape": "dot", "size": 10}, {"id": "Tao Qin", "label": "Tao Qin", "shape": "dot", "size": 10}, {"id": "Tie-Yan Liu", "label": "Tie-Yan Liu", "shape": "dot", "size": 10}, {"id": "Volkan Cevher", "label": "Volkan Cevher", "shape": "dot", "size": 10}, {"id": "Josh Tenenbaum", "label": "Josh Tenenbaum", "shape": "dot", "size": 10}, {"id": "Nati Srebro", "label": "Nati Srebro", "shape": "dot", "size": 10}, {"id": "Qiang Liu", "label": "Qiang Liu", "shape": "dot", "size": 10}, {"id": "Aaron Courville", "label": "Aaron Courville", "shape": "dot", "size": 10}, {"id": "Ping Li", "label": "Ping Li", "shape": "dot", "size": 10}, {"id": "Pieter Abbeel", "label": "Pieter Abbeel", "shape": "dot", "size": 10}, {"id": "Tommi Jaakkola", "label": "Tommi Jaakkola", "shape": "dot", "size": 10}, {"id": "Jinwoo Shin", "label": "Jinwoo Shin", "shape": "dot", "size": 10}, {"id": "Honglak Lee", "label": "Honglak Lee", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"from": "Max Welling", "label": 1, "to": "Yee Whye Teh", "weight": 1}, {"from": "Max Welling", "label": 1, "to": "Richard Zemel", "weight": 1}, {"from": "Max Welling", "label": 1, "to": "Jun Zhu", "weight": 1}, {"from": "Yee Whye Teh", "label": 1, "to": "Zoubin Ghahramani", "weight": 1}, {"from": "Yee Whye Teh", "label": 1, "to": "Nicolas Heess", "weight": 1}, {"from": "Yee Whye Teh", "label": 1, "to": "Jun Zhu", "weight": 1}, {"from": "Yee Whye Teh", "label": 1, "to": "Tong Zhang", "weight": 1}, {"from": "Yee Whye Teh", "label": 1, "to": "Oriol Vinyals", "weight": 1}, {"from": "Arthur Gretton", "label": 1, "to": "Bernhard Sch\u00f6lkopf", "weight": 1}, {"from": "Arthur Gretton", "label": 1, "to": "Le Song", "weight": 1}, {"from": "Arthur Gretton", "label": 1, "to": "Dale Schuurmans", "weight": 1}, {"from": "Bernhard Sch\u00f6lkopf", "label": 1, "to": "Le Song", "weight": 1}, {"from": "Bernhard Sch\u00f6lkopf", "label": 1, "to": "Sergey Levine", "weight": 1}, {"from": "Bernhard Sch\u00f6lkopf", "label": 1, "to": "Zoubin Ghahramani", "weight": 1}, {"from": "Bernhard Sch\u00f6lkopf", "label": 1, "to": "Andreas Krause", "weight": 1}, {"from": "Han Liu", "label": 1, "to": "Pradeep Ravikumar", "weight": 1}, {"from": "Han Liu", "label": 1, "to": "Zhaoran Wang", "weight": 1}, {"from": "Han Liu", "label": 1, "to": "Quanquan Gu", "weight": 1}, {"from": "Han Liu", "label": 1, "to": "Tong Zhang", "weight": 1}, {"from": "Pradeep Ravikumar", "label": 1, "to": "Inderjit Dhillon", "weight": 1}, {"from": "Pradeep Ravikumar", "label": 1, "to": "Cho-Jui Hsieh", "weight": 1}, {"from": "Pradeep Ravikumar", "label": 1, "to": "Eric Xing", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Eric Xing", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Tong Zhang", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Michael Jordan", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Jun Zhu", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Shie Mannor", "weight": 1}, {"from": "Le Song", "label": 1, "to": "Dale Schuurmans", "weight": 1}, {"from": "Csaba Szepesvari", "label": 1, "to": "Remi Munos", "weight": 1}, {"from": "Csaba Szepesvari", "label": 1, "to": "Shie Mannor", "weight": 1}, {"from": "Csaba Szepesvari", "label": 1, "to": "Dale Schuurmans", "weight": 1}, {"from": "Csaba Szepesvari", "label": 1, "to": "Nicolas Heess", "weight": 1}, {"from": "Csaba Szepesvari", "label": 1, "to": "Pushmeet Kohli", "weight": 1}, {"from": "Remi Munos", "label": 1, "to": "Nicolas Heess", "weight": 1}, {"from": "Remi Munos", "label": 1, "to": "Oriol Vinyals", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Percy Liang", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Francis Bach", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Zoubin Ghahramani", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Stefanie Jegelka", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Eric Xing", "weight": 1}, {"from": "Michael Jordan", "label": 1, "to": "Zhaoran Wang", "weight": 1}, {"from": "Percy Liang", "label": 1, "to": "Francis Bach", "weight": 1}, {"from": "Percy Liang", "label": 1, "to": "Pushmeet Kohli", "weight": 1}, {"from": "Inderjit Dhillon", "label": 1, "to": "Prateek Jain", "weight": 1}, {"from": "Inderjit Dhillon", "label": 1, "to": "Cho-Jui Hsieh", "weight": 1}, {"from": "Eric Xing", "label": 1, "to": "Jun Zhu", "weight": 1}, {"from": "Eric Xing", "label": 1, "to": "David Blei", "weight": 1}, {"from": "Eric Xing", "label": 1, "to": "Russ Salakhutdinov", "weight": 1}, {"from": "Eric Xing", "label": 1, "to": "Lawrence Carin", "weight": 1}, {"from": "Jun Zhu", "label": 1, "to": "Tong Zhang", "weight": 1}, {"from": "Jun Zhu", "label": 1, "to": "Stefano Ermon", "weight": 1}, {"from": "Zoubin Ghahramani", "label": 1, "to": "Sergey Levine", "weight": 1}, {"from": "Zoubin Ghahramani", "label": 1, "to": "Yoshua Bengio", "weight": 1}, {"from": "David Blei", "label": 1, "to": "Francis Bach", "weight": 1}, {"from": "Tao Qin", "label": 1, "to": "Tie-Yan Liu", "weight": 1}, {"from": "Francis Bach", "label": 1, "to": "Stefanie Jegelka", "weight": 1}, {"from": "Francis Bach", "label": 1, "to": "Volkan Cevher", "weight": 1}, {"from": "Josh Tenenbaum", "label": 1, "to": "Russ Salakhutdinov", "weight": 1}, {"from": "Josh Tenenbaum", "label": 1, "to": "Pushmeet Kohli", "weight": 1}, {"from": "Russ Salakhutdinov", "label": 1, "to": "Nati Srebro", "weight": 1}, {"from": "Russ Salakhutdinov", "label": 1, "to": "Richard Zemel", "weight": 1}, {"from": "Russ Salakhutdinov", "label": 1, "to": "Yoshua Bengio", "weight": 1}, {"from": "Russ Salakhutdinov", "label": 1, "to": "Sergey Levine", "weight": 1}, {"from": "Dale Schuurmans", "label": 1, "to": "Qiang Liu", "weight": 1}, {"from": "Aaron Courville", "label": 1, "to": "Yoshua Bengio", "weight": 1}, {"from": "Yoshua Bengio", "label": 1, "to": "Sergey Levine", "weight": 1}, {"from": "Nati Srebro", "label": 1, "to": "Tong Zhang", "weight": 1}, {"from": "Tong Zhang", "label": 1, "to": "Quanquan Gu", "weight": 1}, {"from": "Tong Zhang", "label": 1, "to": "Ping Li", "weight": 1}, {"from": "Quanquan Gu", "label": 1, "to": "Zhaoran Wang", "weight": 1}, {"from": "Nicolas Heess", "label": 1, "to": "Pieter Abbeel", "weight": 1}, {"from": "Nicolas Heess", "label": 1, "to": "Oriol Vinyals", "weight": 1}, {"from": "Nicolas Heess", "label": 1, "to": "Pushmeet Kohli", "weight": 1}, {"from": "Stefanie Jegelka", "label": 1, "to": "Andreas Krause", "weight": 1}, {"from": "Stefanie Jegelka", "label": 1, "to": "Pushmeet Kohli", "weight": 1}, {"from": "Stefanie Jegelka", "label": 1, "to": "Volkan Cevher", "weight": 1}, {"from": "Stefanie Jegelka", "label": 1, "to": "Tommi Jaakkola", "weight": 1}, {"from": "Andreas Krause", "label": 1, "to": "Volkan Cevher", "weight": 1}, {"from": "Volkan Cevher", "label": 1, "to": "Lawrence Carin", "weight": 1}, {"from": "Zhaoran Wang", "label": 1, "to": "Qiang Liu", "weight": 1}, {"from": "Pieter Abbeel", "label": 1, "to": "Sergey Levine", "weight": 1}, {"from": "Pieter Abbeel", "label": 1, "to": "Jinwoo Shin", "weight": 1}, {"from": "Sergey Levine", "label": 1, "to": "Honglak Lee", "weight": 1}, {"from": "Sergey Levine", "label": 1, "to": "Stefano Ermon", "weight": 1}, {"from": "Pushmeet Kohli", "label": 1, "to": "Honglak Lee", "weight": 1}, {"from": "Pushmeet Kohli", "label": 1, "to": "Oriol Vinyals", "weight": 1}, {"from": "Honglak Lee", "label": 1, "to": "Jinwoo Shin", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
