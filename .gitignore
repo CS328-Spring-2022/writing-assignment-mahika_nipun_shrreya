@@ -1,5 +1,5 @@
 ### My gitignores ###
-_html/*.html
+
 _notebooks/data/papers.csv
 
 
